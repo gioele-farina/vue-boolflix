@@ -17,9 +17,17 @@ nav {
 }
 
 main {
-  height: calc(100vh - 40px);
+  height: calc(100vh - 70px);
   background-color: lightgrey;
   overflow: auto;
+}
+
+footer {
+  height: 30px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* contenuto */

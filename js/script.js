@@ -10,7 +10,9 @@ var app = new Vue({
     // dati
     movies: [],
     // ricerca
-    ricerca: ""
+    ricerca: "",
+    pagineTotali: 0,
+    paginaAttuale: 0
   },
 
   mounted: function () {
@@ -28,30 +30,68 @@ var app = new Vue({
         console.log("Ricerca: ", this.query);
         this.ricerca = "";
 
+        // Interrogo l'Api
         this.getMovies();
       }
     },
 
-    getMovies: function(){
+    getMovies: function(page){
       /*
       esempio richiesta
       https://api.themoviedb.org/3/search/movie?api_key=cd471903e138fa6aad2b7a7c8910d06f&language=it-IT&query=casa
       */
-      let queryCompleta = `${this.apiFilm}api_key=${this.apiKey}&language=${this.language}&query=${this.query}`;
+      if (isNaN(page)) {
+        page = 1;
+      }
+
+      let queryCompleta = `${this.apiFilm}api_key=${this.apiKey}&language=${this.language}&query=${this.query}&page=${page}`;
 
       axios.get(queryCompleta)
       .then(risposta => {
         console.log("Totale risultati: ", risposta.data.total_results);
+        console.log("Pagine totali: ", risposta.data.total_pages);
+        console.log("Pagina attuale: ", risposta.data.page);
+
         this.movies = risposta.data.results;
+        this.pagineTotali = risposta.data.total_pages;
+        this.paginaAttuale = risposta.data.page;
+
         console.log("Array risultati:", this.movies);
       });
     },
 
+    nextPage: function() {
+      if (this.paginaAttuale < this.pagineTotali) {
+        console.log("pagina successiva");
+        this.getMovies(this.paginaAttuale + 1);
+      }
+    },
+
+    prePage: function() {
+      if (this.paginaAttuale > 1) {
+        console.log("pagina precedente");
+        this.getMovies(this.paginaAttuale - 1);
+      }
+    }
+
+  }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+/*
     getMovieDetails: function(movieID, datoRichiesto){
-      /*
       esempio di richiesta
       https://api.themoviedb.org/3/movie/741074?api_key=cd471903e138fa6aad2b7a7c8910d06f
-      */
       let queryDettagli = `${this.apiDettagliFilm}${movieID}?api_key=${this.apiKey}`;
 
       axios.get(queryDettagli)
@@ -71,7 +111,5 @@ var app = new Vue({
         }
 
       });
-
-    }
-  }
-})
+    },
+*/

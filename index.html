@@ -40,6 +40,15 @@
         </div>
       </main>
 
+      <!-- footer -->
+      <footer>
+        <div class="navigazione" v-if="pagineTotali !== 0">
+          <i class="far fa-caret-square-left" @click="prePage()"></i>
+          <span>Page {{paginaAttuale}} of {{pagineTotali}}</span>
+          <i class="far fa-caret-square-right" @click="nextPage()"></i>
+        </div>
+      </footer>
+
     </div>
 
   <script type="text/javascript" src="js/script.js"></script>
