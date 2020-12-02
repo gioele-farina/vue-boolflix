@@ -1,0 +1,21 @@
+/* Regole generali */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* fine regole generali */
+
+nav {
+  height: 40px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  height: calc(100vh - 40px);
+  background-color: lightgrey;
+}
