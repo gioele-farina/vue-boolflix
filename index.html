@@ -38,8 +38,14 @@
           <!-- da debuggare -->
           <!-- <h3>Lingue: <span v-for="lingue in movie.infoAggiuntive.spoken_languages">{{ lingue.name }} </span></h3> -->
           <h3>Lingua originale: {{ movie.original_language }}</h3>
-          <h3>Voto: {{ movie.vote_average }}</h3>
-          <!-- <h3>Voto: {{ rating(i) }}</h3> -->
+          <!-- <h3>Voto: {{ rating(movie.vote_average) }}</h3> -->
+          <h3>Voto:
+              <!-- stellina piena -->
+             <i v-for="iteration in rating(movie.vote_average)" class="fas fa-star"></i>
+             <!-- stellina vuota -->
+             <i v-for="iteration in (5 -rating(movie.vote_average))" class="far fa-star"></i>
+          </h3>
+
         </div>
       </main>
 

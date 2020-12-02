@@ -102,8 +102,13 @@ var app = new Vue({
       }
     },
 
-    rating: function(movie) {
-      console.log(movie);
+    rating: function(rated) {
+      let stars = 5 * (rated / 10);
+      if (stars === 0) {
+        return stars;
+      } else {
+        return Math.ceil(stars);
+      }
     }
 
   }
