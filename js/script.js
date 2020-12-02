@@ -55,8 +55,28 @@ var app = new Vue({
         this.movies = risposta.data.results;
         this.pagineTotali = risposta.data.total_pages;
         this.paginaAttuale = risposta.data.page;
+        // console.log("Array risultati:", this.movies);
 
-        console.log("Array risultati:", this.movies);
+        this.getMoviesMoreInfo();
+      });
+    },
+
+    getMoviesMoreInfo: function(){
+      // appendo le informazioni aggiuntive
+      /*
+      esempio di richiesta
+      https://api.themoviedb.org/3/movie/741074?api_key=cd471903e138fa6aad2b7a7c8910d06f
+      */
+      let movieID;
+      let queryDettagli;
+      this.movies.forEach((movie, i) => {
+        movieID = movie.id;
+        queryDettagli = `${this.apiDettagliFilm}${movieID}?api_key=${this.apiKey}`;
+
+        axios.get(queryDettagli)
+        .then(risposta => {
+          movie.infoAggiuntive = risposta.data;
+        });
       });
     },
 
@@ -76,7 +96,6 @@ var app = new Vue({
 
   }
 })
-
 
 
 
