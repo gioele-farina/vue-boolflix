@@ -21,6 +21,13 @@ var app = new Vue({
 
   })},
 
+  computed: {
+    // successivamente posso usarla per aggiungere cose all'output
+    outputRicerca: function () {
+      return this.movies;
+    }
+  },
+
   methods: {
 
     avviaRicerca: function(){
