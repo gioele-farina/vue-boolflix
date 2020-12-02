@@ -26,7 +26,7 @@
 
       <!-- search -->
       <nav>
-        <input v-model="ricerca" placeholder="Search">
+        <input v-model="ricerca" placeholder="Search" v-on:keydown.13="avviaRicerca()">
         <button type="button" name="button" @click="avviaRicerca()">Submit</button>
       </nav>
 
