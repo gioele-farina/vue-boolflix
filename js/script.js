@@ -62,7 +62,7 @@ var app = new Vue({
     },
 
     getMoviesMoreInfo: function(){
-      // appendo le informazioni aggiuntive
+      // appende le informazioni aggiuntive
       /*
       esempio di richiesta
       https://api.themoviedb.org/3/movie/741074?api_key=cd471903e138fa6aad2b7a7c8910d06f
@@ -75,7 +75,8 @@ var app = new Vue({
 
         axios.get(queryDettagli)
         .then(risposta => {
-          movie.infoAggiuntive = risposta.data;
+          // movie.infoAggiuntive = risposta.data;
+          this.$set(movie, "infoAggiuntive", risposta.data);
         });
       });
     },
