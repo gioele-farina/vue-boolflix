@@ -64,7 +64,7 @@ var app = new Vue({
         this.paginaAttuale = risposta.data.page;
         // console.log("Array risultati:", this.movies);
 
-        this.getMoviesMoreInfo();
+        // this.getMoviesMoreInfo(); il dom viene aggiornato ad ogni singola iterazione del for each
       });
     },
 
@@ -100,6 +100,10 @@ var app = new Vue({
         console.log("pagina precedente");
         this.getMovies(this.paginaAttuale - 1);
       }
+    },
+
+    rating: function(movie) {
+      console.log(movie);
     }
 
   }
