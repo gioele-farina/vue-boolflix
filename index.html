@@ -35,8 +35,7 @@
         <div class="movie" v-for="movie in outputRicerca">
           <h2>Titolo: {{ movie.title }}</h2>
           <h2>Titolo originale: {{ movie.original_title }}</h2>
-          <!-- <h3>Lingua: <span>{{ movie.infoAggiuntive.spoken_languages.name }}</span></h3> -->
-          <h3>Lingua: <span v-for="lingue in movie.infoAggiuntive.spoken_languages">{{ lingue.name }} </span></h3>
+          <h3>Lingua originale: {{ movie.original_language }}</h3>
           <h3>Voto: {{ movie.vote_average }}</h3>
         </div>
       </main>
