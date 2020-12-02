@@ -42,9 +42,9 @@ var app = new Vue({
 
       axios.get(queryCompleta)
       .then(risposta => {
-        console.log(risposta);
+        console.log("Totale risultati: ", risposta.data.total_results);
+        this.movies = risposta.data.results;
       });
-
     }
 
   }

@@ -32,7 +32,12 @@
 
       <!-- output -->
       <main>
-
+        <div class="movie" v-for="movie in movies">
+          <h2>Titolo: {{ movie.title }}</h2>
+          <h2>Titolo originale: {{ movie.original_title }}</h2>
+          <h3>Lingua: Lingua</h3>
+          <h3>Voto: {{ movie.vote_average }}</h3>
+        </div>
       </main>
 
     </div>
