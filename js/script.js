@@ -127,6 +127,10 @@ var app = new Vue({
       } else {
         return Math.ceil(stars);
       }
+    },
+
+    alternativeView: function(i) {
+      
     }
 
   }
