@@ -19,7 +19,8 @@ var app = new Vue({
 
   mounted: function () {
   this.$nextTick(function () {
-
+    this.ricerca = "fantozzi";
+    this.avviaRicerca();
   })},
 
   computed: {

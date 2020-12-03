@@ -8,22 +8,36 @@
 /* fine regole generali */
 
 /* macrostruttura */
+#app {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 50px 1fr 40px;
+  grid-template-areas:
+  "nav"
+  "main"
+  "footer";
+}
+
 nav {
-  height: 40px;
+  grid-area: nav;
   border: 1px solid black;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  background-color: black;
+  padding: 0 15px;
 }
 
 main {
-  height: calc(100vh - 70px);
-  background-color: lightgrey;
+  grid-area: main;
+  background-color: #434343;
   overflow: auto;
 }
 
 footer {
-  height: 30px;
+  grid-area: footer;
   border: 1px solid black;
   display: flex;
   justify-content: center;
@@ -31,8 +45,54 @@ footer {
 }
 
 /* contenuto */
+/* nav */
+.logo {
+  max-height: 80%;
+}
+
+.search input {
+  width: 180px;
+}
+
+.search button {
+  background-color: #434343;
+  color: white;
+  font-weight: 400;
+  padding: 2px;
+}
+
+/* main */
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 15px;
+}
+
+/* risolve il bug del padding bottom su overflow */
+main:after {
+  content: "";
+  display: block;
+  height: 15px;
+  width: 100%;
+}
+
 .movie {
-  padding: 10px 0;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #CDCDCD;
+  width: 300px;
+  height: 450px;
+  margin: 10px;
+  overflow: hidden;
+}
+
+.movie-info {
+  width: 100%;
+  height: 100%;
+  display: none;
 }
 
 .flag {
@@ -40,5 +100,5 @@ footer {
 }
 
 .poster {
-  width: 342px;
+  width: 100%;
 }

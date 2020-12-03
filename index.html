@@ -26,23 +26,31 @@
 
       <!-- search -->
       <nav>
-        <input v-model="ricerca" placeholder="Search" v-on:keydown.13="avviaRicerca()">
-        <button type="button" name="button" @click="avviaRicerca()">Submit</button>
+        <img class="logo" src="img/logo.png" alt="">
+        <div class="search">
+          <input v-model="ricerca" placeholder="Write something" v-on:keydown.13="avviaRicerca()">
+          <button type="button" name="button" @click="avviaRicerca()">Search</button>
+        </div>
       </nav>
 
       <!-- output -->
       <main>
         <div class="movie" v-for="(movie, i) in outputRicerca">
+
           <img class="poster" :src="'https://image.tmdb.org/t/p/w342/' + movie.poster_path" onerror="this.src='img/no-poster-available.jpg'" alt="No poster data">
-          <h2>Titolo: {{ movie.title || movie.name }}</h2>
-          <h2>Titolo originale: {{ movie.original_title || movie.original_name}}</h2>
-          <h3>Lingua: <img class="flag" :src="'img/flags/' + movie.original_language +'.svg'" onerror="this.src='img/flags/flag_not_found.png'" alt="No data"></h3>
-          <h3>Voto:
-              <!-- stellina piena -->
-             <i v-for="iteration in rating(movie.vote_average)" class="fas fa-star"></i>
-             <!-- stellina vuota -->
-             <i v-for="iteration in (5 -rating(movie.vote_average))" class="far fa-star"></i>
-          </h3>
+
+          <div class="movie-info">
+            <h2>Titolo: {{ movie.title || movie.name }}</h2>
+            <h2>Titolo originale: {{ movie.original_title || movie.original_name}}</h2>
+            <h3>Lingua: <img class="flag" :src="'img/flags/' + movie.original_language +'.svg'" onerror="this.src='img/flags/flag_not_found.png'" alt="No data"></h3>
+            <h3>Voto:
+                <!-- stellina piena -->
+               <i v-for="iteration in rating(movie.vote_average)" class="fas fa-star"></i>
+               <!-- stellina vuota -->
+               <i v-for="iteration in (5 -rating(movie.vote_average))" class="far fa-star"></i>
+            </h3>
+          </div>
+
         </div>
       </main>
 
