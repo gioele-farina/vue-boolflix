@@ -66,11 +66,12 @@
 
       <!-- footer -->
       <footer>
-        <div class="navigazione" v-if="pagineTotali !== 0">
+      Tv:  {{ movies.length }} Serie: {{series.length}} Totali: {{ risultatiTotali }}
+        <!-- <div class="navigazione" v-if="pagineTotali !== 0">
           <i class="far fa-caret-square-left" @click="prePage()"></i>
           <span>Page {{paginaAttuale}} of {{pagineTotali}}</span>
           <i class="far fa-caret-square-right" @click="nextPage()"></i>
-        </div>
+        </div> -->
       </footer>
 
     </div>

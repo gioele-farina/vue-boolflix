@@ -14,7 +14,8 @@ var app = new Vue({
     // ricerca
     ricerca: "",
     pagineTotali: 0,
-    paginaAttuale: 0
+    paginaAttuale: 0,
+    risultatiTotali: 0
   },
 
   mounted: function () {
@@ -34,8 +35,9 @@ var app = new Vue({
 
     avviaRicerca: function(){
       if (this.ricerca !== "") {
-        // reset di questo campo
+        // reset di questi campi
         this.pagineTotali = 0;
+        this.risultatiTotali = 0;
 
         // l'api vuole "+" anzichè gli spazi, quindi li converto
         this.query = this.ricerca.replace(/ /g, "+");
@@ -44,7 +46,7 @@ var app = new Vue({
 
         // Interrogo l'Api (movies, series ecc)
         this.getMovies();
-        this.getSeries();
+        // this.getSeries();
       }
     },
 
@@ -55,6 +57,9 @@ var app = new Vue({
         page = 1;
       }
 
+      let datiRicevuti;
+      let pagineTotaliRicerca = 0;
+
       axios.get(this.apiFilm, {
       params: {
         api_key: this.apiKey,
@@ -64,16 +69,33 @@ var app = new Vue({
       }
       })
       .then(risposta => {
-        console.log("Totale risultati: ", risposta.data.total_results);
+        console.log("Totale risultati film: ", risposta.data.total_results);
         console.log("Pagine totali film: ", risposta.data.total_pages);
-        console.log("Pagina attuale: ", risposta.data.page);
+        console.log("-------------------------------------------------");
 
-        this.movies = risposta.data.results;
-        // Serve per mostrare il numero maggiore di pagine, fra film e serie
-        if (risposta.data.total_pages > this.pagineTotali) {
-          this.pagineTotali = risposta.data.total_pages;
+        pagineTotaliRicerca = risposta.data.total_pages;
+        // datiRicevuti += risposta.data.results;
+        this.risultatiTotali += risposta.data.results.length;
+
+        // Interrogo tutte le pagine per quella query
+        for (let i = 1; i < pagineTotaliRicerca; i++) {
+          console.log("chiamata ausiliaria", i+1);
+          page++;
+          axios.get(this.apiFilm, {
+          params: {
+            api_key: this.apiKey,
+            language: this.language,
+            query: this.query,
+            page: page
+          }
+          })
+          .then(risposta => {
+            console.log("pagina attuale", risposta.data.page);
+            // datiRicevuti += risposta.data.results;
+            this.risultatiTotali += risposta.data.results.length;
+          });
         }
-        this.paginaAttuale = risposta.data.page;
+
       });
     },
 
