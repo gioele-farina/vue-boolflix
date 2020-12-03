@@ -38,6 +38,7 @@ var app = new Vue({
         // reset di questi campi
         this.pagineTotali = 0;
         this.risultatiTotali = 0;
+        this.movies = [];
 
         // l'api vuole "+" anzichè gli spazi, quindi li converto
         this.query = this.ricerca.replace(/ /g, "+");
@@ -57,7 +58,6 @@ var app = new Vue({
         page = 1;
       }
 
-      let datiRicevuti;
       let pagineTotaliRicerca = 0;
 
       axios.get(this.apiFilm, {
@@ -74,7 +74,7 @@ var app = new Vue({
         console.log("-------------------------------------------------");
 
         pagineTotaliRicerca = risposta.data.total_pages;
-        // datiRicevuti += risposta.data.results;
+        this.movies = [...this.movies,...risposta.data.results];
         this.risultatiTotali += risposta.data.results.length;
 
         // Interrogo tutte le pagine per quella query
@@ -91,7 +91,7 @@ var app = new Vue({
           })
           .then(risposta => {
             console.log("pagina attuale", risposta.data.page);
-            // datiRicevuti += risposta.data.results;
+            this.movies = [...this.movies,...risposta.data.results];
             this.risultatiTotali += risposta.data.results.length;
           });
         }
