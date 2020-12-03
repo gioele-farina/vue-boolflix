@@ -33,9 +33,9 @@
       <!-- output -->
       <main>
         <div class="movie" v-for="(movie, i) in outputRicerca">
+          <img class="poster" :src="'https://image.tmdb.org/t/p/w342/' + movie.poster_path" onerror="this.src='img/no-poster-available.jpg'" alt="No poster data">
           <h2>Titolo: {{ movie.title || movie.name }}</h2>
           <h2>Titolo originale: {{ movie.original_title || movie.original_name}}</h2>
-          <!-- <h3>Lingua: {{ movie.original_language }}</h3> -->
           <h3>Lingua: <img class="flag" :src="'img/flags/' + movie.original_language +'.svg'" onerror="this.src='img/flags/flag_not_found.png'" alt="No data"></h3>
           <h3>Voto:
               <!-- stellina piena -->
