@@ -39,6 +39,7 @@ var app = new Vue({
         this.pagineTotali = 0;
         this.risultatiTotali = 0;
         this.movies = [];
+        this.series = [];
 
         // l'api vuole "+" anzichè gli spazi, quindi li converto
         this.query = this.ricerca.replace(/ /g, "+");
@@ -47,7 +48,7 @@ var app = new Vue({
 
         // Interrogo l'Api (movies, series ecc)
         this.getMovies();
-        // this.getSeries();
+        this.getSeries();
       }
     },
 
@@ -90,7 +91,6 @@ var app = new Vue({
           }
           })
           .then(risposta => {
-            console.log("pagina attuale", risposta.data.page);
             this.movies = [...this.movies,...risposta.data.results];
             this.risultatiTotali += risposta.data.results.length;
           });
@@ -100,11 +100,12 @@ var app = new Vue({
     },
 
     getSeries: function(page){
-
       // Se il parametro pagina non è specificato, mette 1 di default
       if (isNaN(page)) {
         page = 1;
       }
+
+      let pagineTotaliRicerca = 0;
 
       axios.get(this.apiSerie, {
       params: {
@@ -115,17 +116,34 @@ var app = new Vue({
       }
       })
       .then(risposta => {
-        console.log("Totale risultati: ", risposta.data.total_results);
+        console.log("Totale risultati serie: ", risposta.data.total_results);
         console.log("Pagine totali serie: ", risposta.data.total_pages);
-        console.log("Pagina attuale: ", risposta.data.page);
+        console.log("-------------------------------------------------");
 
-        this.series = risposta.data.results;
-        // Serve per mostrare il numero maggiore di pagine, fra film e serie
-        if (risposta.data.total_pages > this.pagineTotali) {
-          this.pagineTotali = risposta.data.total_pages;
+        pagineTotaliRicerca = risposta.data.total_pages;
+        this.series = [...this.series,...risposta.data.results];
+        this.risultatiTotali += risposta.data.results.length;
+
+        // Interrogo tutte le pagine per quella query
+        for (let i = 1; i < pagineTotaliRicerca; i++) {
+          console.log("chiamata ausiliaria", i+1);
+          page++;
+          axios.get(this.apiFilm, {
+          params: {
+            api_key: this.apiKey,
+            language: this.language,
+            query: this.query,
+            page: page
+          }
+          })
+          .then(risposta => {
+            this.series = [...this.series,...risposta.data.results];
+            this.risultatiTotali += risposta.data.results.length;
+          });
         }
-        this.paginaAttuale = risposta.data.page;
+
       });
+
     },
 
     nextPage: function() {
