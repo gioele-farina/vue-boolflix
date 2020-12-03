@@ -106,9 +106,13 @@ main:after {
   display: none;
 }
 
+.summary {
+  min-height: 40%;
+}
+
 .overview {
   width: 100%;
-  max-height: 50%;
+  height: 60%;
   overflow: auto;
 }
 
@@ -117,7 +121,13 @@ main:after {
 }
 
 .flag {
+  text-align: center;
+}
+
+.flag img {
   width: 50px;
+  border: 2px solid white;
+  border-radius: 50%;
 }
 
 .poster {
@@ -127,6 +137,7 @@ main:after {
 /* fonts */
 main h2 {
   font-size: 1rem;
+  margin-bottom: 5px;
 }
 main span {
   font-size: 0.8rem;

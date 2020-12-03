@@ -37,20 +37,24 @@
       <main>
         <div class="movie" v-for="(movie, i) in outputRicerca">
 
-          <img class="poster" :src="'https://image.tmdb.org/t/p/w342/' + movie.poster_path" onerror="alternativeView(i)" alt="No poster data"> <!--onerror="this.src='img/no-poster-available.jpg'" alt="No poster data"-->
+          <img class="poster" :src="'https://image.tmdb.org/t/p/w342/' + movie.poster_path"  onerror="this.src='img/no-poster-available.jpg'" alt="No poster data">
 
           <div class="movie-info">
-            <h2>Titolo: <span>{{ movie.title || movie.name }}<span></h2>
-            <h2>Titolo originale: <span>{{ movie.original_title || movie.original_name}}<span></h2>
-            <img class="flag" :src="'img/flags/' + movie.original_language +'.svg'" onerror="this.src='img/flags/flag_not_found.png'" alt="No data">
-            <h2>Voto:
-                <!-- stellina piena -->
-               <i v-for="iteration in rating(movie.vote_average)" class="fas fa-star"></i>
-               <!-- stellina vuota -->
-               <i v-for="iteration in (5 -rating(movie.vote_average))" class="far fa-star"></i>
-            </h2>
+            <div class="summary">
+              <h2>Titolo: <span>{{ movie.title || movie.name }}<span></h2>
+              <h2>Titolo originale: <span>{{ movie.original_title || movie.original_name}}<span></h2>
+              <h2>Voto:
+                  <!-- stellina piena -->
+                 <i v-for="iteration in rating(movie.vote_average)" class="fas fa-star"></i>
+                 <!-- stellina vuota -->
+                 <i v-for="iteration in (5 -rating(movie.vote_average))" class="far fa-star"></i>
+              </h2>
+              <div class="flag">
+                <img :src="'img/flags/' + movie.original_language +'.svg'" onerror="this.src='img/flags/flag_not_found.png'" alt="No data">
+              </div>
+            </div>
             <div class="overview">
-              <h2>Overview: <span>{{ movie.overview }}</span></h2>
+              <h2 v-if="movie.overview !== ''">Overview: <span>{{ movie.overview }}</span></h2>
             </div>
           </div>
 
