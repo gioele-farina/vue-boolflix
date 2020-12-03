@@ -24,7 +24,7 @@ var app = new Vue({
   })},
 
   computed: {
-    // successivamente posso usarla per aggiungere cose all'output
+    // Gestione output
     outputRicerca: function () {
       return [...this.movies,...this.series];
     }
@@ -128,11 +128,6 @@ var app = new Vue({
         return Math.ceil(stars);
       }
     },
-
-    alternativeView: function(i) {
-      
-    }
-
   }
 })
 
