@@ -33,8 +33,8 @@
       <!-- output -->
       <main>
         <div class="movie" v-for="(movie, i) in outputRicerca">
-          <h2>Titolo: {{ movie.title }}</h2>
-          <h2>Titolo originale: {{ movie.original_title }}</h2>
+          <h2>Titolo: {{ movie.title || movie.name }}</h2>
+          <h2>Titolo originale: {{ movie.original_title || movie.original_name}}</h2>
           <!-- <h3>Lingua: {{ movie.original_language }}</h3> -->
           <h3>Lingua: <img class="flag" :src="'img/flags/' + movie.original_language +'.svg'" onerror="this.src='img/flags/flag_not_found.png'" alt="No data"></h3>
           <h3>Voto:
@@ -43,7 +43,6 @@
              <!-- stellina vuota -->
              <i v-for="iteration in (5 -rating(movie.vote_average))" class="far fa-star"></i>
           </h3>
-
         </div>
       </main>
 
