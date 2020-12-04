@@ -19,13 +19,28 @@ var app = new Vue({
     risultatiTotali: 0,
     //info aggiuntive on hover
     cast: [],
-    generi: []
+    generi: [],
+    // elenco generi
+    moviesGeneri: [],
+    seriesGeneri: []
   },
 
   mounted: function () {
   this.$nextTick(function () {
-    this.ricerca = "ritorno+al+futuro";
-    this.avviaRicerca();
+      // Recupero elenco dei generi
+      // Movies
+      axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${this.apiKey}&${this.language}`)
+      .then(risposta => {
+        this.moviesGeneri = risposta.data.genres;
+        console.log("Generi film: ", this.moviesGeneri);
+      });
+      // Series
+      axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${this.apiKey}&${this.language}`)
+      .then(risposta => {
+        this.seriesGeneri = risposta.data.genres;
+        console.log("Generi serie: ", this.seriesGeneri);
+      });
+
   })},
 
   computed: {
@@ -89,7 +104,7 @@ var app = new Vue({
 
         // Interrogo tutte le pagine per quella query
         for (let i = 1; i < pagineTotaliRicerca; i++) {
-          console.log("chiamata ausiliaria", i+1);
+          // console.log("chiamata ausiliaria", i+1);
           page++;
           axios.get(this.apiFilm, {
           params: {
@@ -146,7 +161,7 @@ var app = new Vue({
 
         // Interrogo tutte le pagine per quella query
         for (let i = 1; i < pagineTotaliRicerca; i++) {
-          console.log("chiamata ausiliaria", i+1);
+          // console.log("chiamata ausiliaria", i+1);
           page++;
           axios.get(this.apiFilm, {
           params: {
@@ -195,8 +210,8 @@ var app = new Vue({
     },
 
     showMoreInfo: function(movieDATA){
-      console.log("ID:", movieDATA.id);
-      console.log("Tipo", movieDATA.categoria);
+      // console.log("ID:", movieDATA.id);
+      // console.log("Tipo", movieDATA.categoria);
       queryDettagliFilm = `${this.apiDettagliFilm}${movieDATA.id}?api_key=${this.apiKey}&${this.language}&append_to_response=credits`;
       queryDettagliSerie = `${this.apiDettagliSerie}${movieDATA.id}?api_key=${this.apiKey}&${this.language}&append_to_response=credits`;
 
@@ -215,7 +230,7 @@ var app = new Vue({
           return genere.name;
         });
         this.generi = generi;
-        console.log("Generi: ", this.generi);
+        // console.log("Generi: ", this.generi);
         // estrapolo il cast
         let cast = risposta.data.credits.cast.map((attore) => {
           if (attore.known_for_department === "Acting") {
@@ -223,7 +238,7 @@ var app = new Vue({
           }
         });
         this.cast = cast;
-        console.log("Cast: ", this.cast);
+        // console.log("Cast: ", this.cast);
       });
 
     }
