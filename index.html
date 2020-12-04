@@ -55,6 +55,8 @@
               <div class="flag">
                 <img :src="'img/flags/' + movie.original_language +'.svg'" onerror="this.src='img/flags/flag_not_found.png'" alt="No data">
               </div>
+              <h2>Generi: <span v-for="genere in generi">{{ genere }} </span></h2>
+              <h2>Cast: <span v-for="attore in cast.slice(0,4)">{{ attore }} </span></h2>
             </div>
             <!-- Overview -->
             <div class="overview">
