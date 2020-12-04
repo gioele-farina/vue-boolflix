@@ -24,7 +24,7 @@ var app = new Vue({
 
   mounted: function () {
   this.$nextTick(function () {
-    this.ricerca = "fantozzi";
+    this.ricerca = "ritorno+al+futuro";
     this.avviaRicerca();
   })},
 
@@ -78,6 +78,11 @@ var app = new Vue({
         console.log("Pagine totali film: ", risposta.data.total_pages);
         console.log("-------------------------------------------------");
 
+        risposta.data.results.forEach((movie, i) => {
+          this.$set(movie, "categoria", "movie");
+        });
+
+        // Aggiunto la proprietà film o serie ai dati
         pagineTotaliRicerca = risposta.data.total_pages;
         this.movies = [...this.movies,...risposta.data.results];
         this.risultatiTotali += risposta.data.results.length;
@@ -95,12 +100,18 @@ var app = new Vue({
           }
           })
           .then(risposta => {
+            // Aggiunto la proprietà film o serie ai dati
+            risposta.data.results.forEach((movie, i) => {
+              this.$set(movie, "categoria", "movie");
+            });
+
             this.movies = [...this.movies,...risposta.data.results];
             this.risultatiTotali += risposta.data.results.length;
           });
         }
 
       });
+
     },
 
     getSeries: function(page){
@@ -124,6 +135,11 @@ var app = new Vue({
         console.log("Pagine totali serie: ", risposta.data.total_pages);
         console.log("-------------------------------------------------");
 
+        // Aggiunto la proprietà film o serie ai dati
+        risposta.data.results.forEach((movie, i) => {
+          this.$set(movie, "categoria", "serie");
+        });
+
         pagineTotaliRicerca = risposta.data.total_pages;
         this.series = [...this.series,...risposta.data.results];
         this.risultatiTotali += risposta.data.results.length;
@@ -141,6 +157,11 @@ var app = new Vue({
           }
           })
           .then(risposta => {
+            // Aggiunto la proprietà film o serie ai dati
+            risposta.data.results.forEach((movie, i) => {
+              this.$set(movie, "categoria", "serie");
+            });
+
             this.series = [...this.series,...risposta.data.results];
             this.risultatiTotali += risposta.data.results.length;
           });
@@ -173,16 +194,17 @@ var app = new Vue({
       }
     },
 
-    showMoreInfo: function(movieID){
-      console.log("ID:", movieID);
-      queryDettagliFilm = `${this.apiDettagliFilm}${movieID}?api_key=${this.apiKey}&${this.language}&append_to_response=credits`;
-      queryDettagliSerie = `${this.apiDettagliSerie}${movieID}?api_key=${this.apiKey}&${this.language}&append_to_response=credits`;
+    showMoreInfo: function(movieDATA){
+      console.log("ID:", movieDATA.id);
+      console.log("tipo", movieDATA.categoria);
+      queryDettagliFilm = `${this.apiDettagliFilm}${movieDATA.id}?api_key=${this.apiKey}&${this.language}&append_to_response=credits`;
+      queryDettagliSerie = `${this.apiDettagliSerie}${movieDATA.id}?api_key=${this.apiKey}&${this.language}&append_to_response=credits`;
 
       // qui posso provare un || non funziona, devo fare una condizione e sapere se ricevo un id di serie o di movie
-      axios.get(queryDettagliFilm || queryDettagliSerie)
-      .then(risposta => {
-        console.log(risposta.data);
-      });
+      // axios.get(queryDettagliFilm || queryDettagliSerie)
+      // .then(risposta => {
+      //   console.log(risposta.data);
+      // });
 
     }
   }

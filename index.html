@@ -36,7 +36,7 @@
       <!-- output -->
       <main>
         <!-- Questa è una singola scheda film/serie -->
-        <div class="movie" v-for="(movie, i) in outputRicerca" @mouseenter="showMoreInfo(movie.id)">
+        <div class="movie" v-for="(movie, i) in outputRicerca" @mouseenter="showMoreInfo(movie)">
 
           <img class="poster" :src="'https://image.tmdb.org/t/p/w342/' + movie.poster_path"  onerror="this.src='img/no-poster-available.jpg'" alt="No poster data">
 
