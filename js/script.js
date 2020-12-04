@@ -16,7 +16,6 @@ var app = new Vue({
     ricerca: "",
     pagineTotali: 0,
     paginaAttuale: 0,
-    risultatiTotali: 0,
     //info aggiuntive on hover
     cast: [],
     generi: [],
@@ -56,9 +55,7 @@ var app = new Vue({
       if (this.ricerca !== "") {
         // reset di questi campi
         this.pagineTotali = 0;
-        this.risultatiTotali = 0;
-        this.movies = [];
-        this.series = [];
+        this.paginaAttuale = 0;
 
         // l'api vuole "+" anzichè gli spazi, quindi li converto
         this.query = this.ricerca.replace(/ /g, "+");
@@ -78,8 +75,6 @@ var app = new Vue({
         page = 1;
       }
 
-      let pagineTotaliRicerca = 0;
-
       axios.get(this.apiFilm, {
       params: {
         api_key: this.apiKey,
@@ -98,33 +93,11 @@ var app = new Vue({
           this.$set(movie, "categoria", "movie");
         });
 
-        pagineTotaliRicerca = risposta.data.total_pages;
-        this.movies = [...this.movies,...risposta.data.results];
-        this.risultatiTotali += risposta.data.results.length;
-
-        // Interrogo tutte le pagine per quella query
-        for (let i = 1; i < pagineTotaliRicerca; i++) {
-          // console.log("chiamata ausiliaria", i+1);
-          page++;
-          axios.get(this.apiFilm, {
-          params: {
-            api_key: this.apiKey,
-            language: this.language,
-            query: this.query,
-            page: page
-          }
-          })
-          .then(risposta => {
-            // Aggiunto la proprietà film o serie ai dati
-            risposta.data.results.forEach((movie, i) => {
-              this.$set(movie, "categoria", "movie");
-            });
-
-            this.movies = [...this.movies,...risposta.data.results];
-            this.risultatiTotali += risposta.data.results.length;
-          });
+        this.paginaAttuale = page;
+        if (risposta.data.total_pages > this.pagineTotali) {
+          this.pagineTotali = risposta.data.total_pages;
         }
-
+        this.movies = risposta.data.results;
       });
 
     },
@@ -134,8 +107,6 @@ var app = new Vue({
       if (isNaN(page)) {
         page = 1;
       }
-
-      let pagineTotaliRicerca = 0;
 
       axios.get(this.apiSerie, {
       params: {
@@ -155,48 +126,26 @@ var app = new Vue({
           this.$set(movie, "categoria", "serie");
         });
 
-        pagineTotaliRicerca = risposta.data.total_pages;
-        this.series = [...this.series,...risposta.data.results];
-        this.risultatiTotali += risposta.data.results.length;
-
-        // Interrogo tutte le pagine per quella query
-        for (let i = 1; i < pagineTotaliRicerca; i++) {
-          // console.log("chiamata ausiliaria", i+1);
-          page++;
-          axios.get(this.apiFilm, {
-          params: {
-            api_key: this.apiKey,
-            language: this.language,
-            query: this.query,
-            page: page
-          }
-          })
-          .then(risposta => {
-            // Aggiunto la proprietà film o serie ai dati
-            risposta.data.results.forEach((movie, i) => {
-              this.$set(movie, "categoria", "serie");
-            });
-
-            this.series = [...this.series,...risposta.data.results];
-            this.risultatiTotali += risposta.data.results.length;
-          });
+        this.paginaAttuale = page;
+        if (risposta.data.total_pages > this.pagineTotali) {
+          this.pagineTotali = risposta.data.total_pages;
         }
-
+        this.series = risposta.data.results;
       });
 
     },
 
     nextPage: function() {
       if (this.paginaAttuale < this.pagineTotali) {
-        console.log("pagina successiva");
         this.getMovies(this.paginaAttuale + 1);
+        this.getSeries(this.paginaAttuale + 1);
       }
     },
 
     prePage: function() {
       if (this.paginaAttuale > 1) {
-        console.log("pagina precedente");
         this.getMovies(this.paginaAttuale - 1);
+        this.getSeries(this.paginaAttuale - 1);
       }
     },
 
