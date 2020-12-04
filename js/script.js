@@ -18,8 +18,8 @@ var app = new Vue({
     paginaAttuale: 0,
     risultatiTotali: 0,
     //info aggiuntive on hover
-    cast: "",
-    generi: ""
+    cast: [],
+    generi: []
   },
 
   mounted: function () {
@@ -78,11 +78,11 @@ var app = new Vue({
         console.log("Pagine totali film: ", risposta.data.total_pages);
         console.log("-------------------------------------------------");
 
+        // Aggiunto la proprietà film o serie ai dati
         risposta.data.results.forEach((movie, i) => {
           this.$set(movie, "categoria", "movie");
         });
 
-        // Aggiunto la proprietà film o serie ai dati
         pagineTotaliRicerca = risposta.data.total_pages;
         this.movies = [...this.movies,...risposta.data.results];
         this.risultatiTotali += risposta.data.results.length;
@@ -196,15 +196,35 @@ var app = new Vue({
 
     showMoreInfo: function(movieDATA){
       console.log("ID:", movieDATA.id);
-      console.log("tipo", movieDATA.categoria);
+      console.log("Tipo", movieDATA.categoria);
       queryDettagliFilm = `${this.apiDettagliFilm}${movieDATA.id}?api_key=${this.apiKey}&${this.language}&append_to_response=credits`;
       queryDettagliSerie = `${this.apiDettagliSerie}${movieDATA.id}?api_key=${this.apiKey}&${this.language}&append_to_response=credits`;
 
-      // qui posso provare un || non funziona, devo fare una condizione e sapere se ricevo un id di serie o di movie
-      // axios.get(queryDettagliFilm || queryDettagliSerie)
-      // .then(risposta => {
-      //   console.log(risposta.data);
-      // });
+      let indirizzo;
+
+      if (movieDATA.categoria === "movie") {
+        indirizzo = queryDettagliFilm;
+      } else if (movieDATA.categoria === "serie") {
+        indirizzo = queryDettagliSerie;
+      }
+
+      axios.get(indirizzo)
+      .then(risposta => {
+        // Estrapolo i generi
+        let generi = risposta.data.genres.map((genere) => {
+          return genere.name;
+        });
+        this.generi = generi;
+        console.log("Generi: ", this.generi);
+        // estrapolo il cast
+        let cast = risposta.data.credits.cast.map((attore) => {
+          if (attore.known_for_department === "Acting") {
+            return attore.name;
+          }
+        });
+        this.cast = cast;
+        console.log("Cast: ", this.cast);
+      });
 
     }
   }
