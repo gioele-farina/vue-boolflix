@@ -111,6 +111,14 @@ main:after {
   overflow: auto;
 }
 
+.summary .elenco::after {
+  content: ", ";
+}
+
+.summary .elenco:last-child::after {
+  content: "";
+}
+
 .overview {
   width: 100%;
   height: 50%;
