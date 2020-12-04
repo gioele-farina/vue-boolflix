@@ -4,6 +4,7 @@ var app = new Vue({
     // Api
     apiFilm: "https://api.themoviedb.org/3/search/movie?",
     apiDettagliFilm: "https://api.themoviedb.org/3/movie/",
+    apiDettagliSerie: "https://api.themoviedb.org/3/tv/",
     apiSerie: "https://api.themoviedb.org/3/search/tv?",
     apiKey: "cd471903e138fa6aad2b7a7c8910d06f",
     query: "",
@@ -15,7 +16,10 @@ var app = new Vue({
     ricerca: "",
     pagineTotali: 0,
     paginaAttuale: 0,
-    risultatiTotali: 0
+    risultatiTotali: 0,
+    //info aggiuntive on hover
+    cast: "",
+    generi: ""
   },
 
   mounted: function () {
@@ -168,27 +172,34 @@ var app = new Vue({
         return Math.ceil(stars);
       }
     },
+
+    showMoreInfo: function(movieID){
+      console.log("ID:", movieID);
+      queryDettagliFilm = `${this.apiDettagliFilm}${movieID}?api_key=${this.apiKey}&${this.language}&append_to_response=credits`;
+      queryDettagliSerie = `${this.apiDettagliSerie}${movieID}?api_key=${this.apiKey}&${this.language}&append_to_response=credits`;
+
+      // qui posso provare un || non funziona, devo fare una condizione e sapere se ricevo un id di serie o di movie
+      axios.get(queryDettagliFilm || queryDettagliSerie)
+      .then(risposta => {
+        console.log(risposta.data);
+      });
+
+    }
   }
 })
 
-/*
-getMoviesMoreInfo: function(){
-  // DA MODIFICARE AL MOMENTO NON ATTIVA
-  // appende le informazioni aggiuntive
-  // esempio di richiesta
-  // https://api.themoviedb.org/3/movie/741074?api_key=cd471903e138fa6aad2b7a7c8910d06f
+// APPUNTI RICEZIONE DETERMINATI DATI DA API.
+// DEVO SAPERE IN ANTICIPO SE L'ID APPARTIENE AD UN FILM O UNA SERIE
 
-  let movieID;
-  let queryDettagli;
-  this.movies.forEach((movie, i) => {
-    movieID = movie.id;
-    queryDettagli = `${this.apiDettagliFilm}${movieID}?api_key=${this.apiKey}`;
+// MOVIES
 
-    axios.get(queryDettagli)
-    .then(risposta => {
-      // movie.infoAggiuntive = risposta.data;
-      this.$set(movie, "infoAggiuntive", risposta.data);
-    });
-  });
-},
-*/
+// Esempio richiesta cast per movie
+// https://api.themoviedb.org/3/movie/105/credits?api_key=cd471903e138fa6aad2b7a7c8910d06f&language=it-IT
+
+// Richiesta dettagli + il cast in aggiunta
+// https://api.themoviedb.org/3/movie/105?api_key=cd471903e138fa6aad2b7a7c8910d06f&language=it-IT&append_to_response=credits
+// Attenzione che gli attori hanno la proprietà known_for_department": "Acting"
+
+// TV
+// Richiesta dettagli + il cast in aggiunta
+// https://api.themoviedb.org/3/tv/4745?api_key=cd471903e138fa6aad2b7a7c8910d06f&language=it-IT&append_to_response=credits
