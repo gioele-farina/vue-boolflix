@@ -36,8 +36,8 @@
       <!-- Ricerca avanzata -->
       <div class="ricercaAvanzata">
         <section class="ricercaMovies">
-          <button type="button" name="button">Esplora film</button>
-          <ul class="tendina">
+          <button type="button" name="buttonEsploraMovies" @click="menuGeneri(event.target.name)">Esplora film</button>
+          <ul v-if="esploraMovies" class="tendina">
             <li>
               <input type="checkbox">
                 Mostra tutti film
@@ -47,14 +47,29 @@
                 Escludi film
               </li>
             <li class="li-special">Generi:</li>
-            <li v-for="genere in moviesGeneri">
+            <li class="li-generi" v-for="genere in moviesGeneri">
               <input type="checkbox">
               {{ genere.name }}
             </li>
           </ul>
         </section>
-        <section class="ricarcaSeries">
-          <button type="button" name="button">Esplora series</button>
+        <section class="ricercaSeries">
+          <button type="button" name="buttonEsploraSeries" @click="menuGeneri(event.target.name)">Esplora series</button>
+          <ul v-if="esploraSeries" class="tendina">
+            <li>
+              <input type="checkbox">
+                Mostra tutte le serie TV
+              </li>
+            <li>
+              <input type="checkbox">
+                Escludi serie TV
+              </li>
+            <li class="li-special">Generi:</li>
+            <li class="li-generi" v-for="genere in seriesGeneri">
+              <input type="checkbox">
+              {{ genere.name }}
+            </li>
+          </ul>
         </section>
       </div>
 

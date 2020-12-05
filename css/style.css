@@ -118,7 +118,7 @@ footer {
   list-style: none;
   text-align: left;
   max-height: 250px;
-  min-width: 180px;
+  min-width: 200px;
   overflow-y: auto;
   background-color: #262626;
   padding: 10px;
@@ -132,13 +132,22 @@ footer {
 }
 
 .tendina li input {
-  margin-right: 2px;
+  margin-right: 4px;
 }
 
 .li-special {
   font-weight: bold;
   margin: 3px 0;
 }
+
+.tendina .li-generi:nth-child(odd) {
+  background-color:  #262626;
+}
+
+.tendina .li-generi:nth-child(even) {
+  background-color:  #333333;
+}
+
 
 /* main */
 main {

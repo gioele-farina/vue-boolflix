@@ -21,7 +21,10 @@ var app = new Vue({
     generi: [],
     // elenco generi
     moviesGeneri: [],
-    seriesGeneri: []
+    seriesGeneri: [],
+    // menu a tendina
+    esploraMovies: false,
+    esploraSeries: false,
   },
 
   mounted: function () {
@@ -31,13 +34,13 @@ var app = new Vue({
       axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${this.apiKey}&${this.language}`)
       .then(risposta => {
         this.moviesGeneri = risposta.data.genres;
-        console.log("Generi film: ", this.moviesGeneri);
+        // console.log("Generi film: ", this.moviesGeneri);
       });
       // Series
       axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${this.apiKey}&${this.language}`)
       .then(risposta => {
         this.seriesGeneri = risposta.data.genres;
-        console.log("Generi serie: ", this.seriesGeneri);
+        // console.log("Generi serie: ", this.seriesGeneri);
       });
 
   })},
@@ -190,6 +193,20 @@ var app = new Vue({
         // console.log("Cast: ", this.cast);
       });
 
+    },
+
+    menuGeneri: function(target){
+      if (target === "buttonEsploraMovies") {
+        this.esploraMovies = !(this.esploraMovies);
+        if (this.esploraSeries) {
+          this.esploraSeries = false;
+        }
+      } else if (target === "buttonEsploraSeries") {
+        this.esploraSeries = !(this.esploraSeries);
+        if (this.esploraMovies) {
+          this.esploraMovies = false;
+        }
+      }
     }
   }
 })
