@@ -27,12 +27,12 @@ var app = new Vue({
     esploraSeries: false,
     // valori menu a tendina
     moviesCheckboxes: {
-      allMovies: false,
-      noMovies: false
+      allSelected: false,
+      noSelected: false
     },
     seriesCheckboxes: {
-      allSeries: false,
-      noSeries: false
+      allSelected: false,
+      noSelected: false
     }
   },
 
@@ -230,33 +230,34 @@ var app = new Vue({
     },
 
     filtroGeneri: function(moviesOrSeries, target){
+        let selezione;
+        let listaGeneri;
+        if (moviesOrSeries === "movies") {
+          selezione = this.moviesCheckboxes;
+          listaGeneri = this.moviesGeneri;
+        } else if (moviesOrSeries === "series") {
+          selezione = this.seriesCheckboxes;
+          listaGeneri = this.seriesGeneri;
+        }
 
-      if (moviesOrSeries === "movies") {
-        // seleziona tutte le spunte solo se clicco sulla casella mostra tutti i film
-        if (target === "allMovies" && this.moviesCheckboxes.allMovies === true) {
+        // seleziona tutte le spunte solo se clicco sulla casella mostra tutti i film/series
+        if ((target === "allMovies" || target === "allSeries") && selezione.allSelected === true) {
           // Setto true tutte le spunte
-          this.moviesGeneri.forEach((genere) => {
-            this.moviesCheckboxes[genere.name] = true;
+          listaGeneri.forEach((genere) => {
+            selezione[genere.name] = true;
           });
-          // Setto false "Escludi film"
-          this.moviesCheckboxes.noMovies = false;
+          // Setto false "Escludi film/serie"
+          selezione.noSelected = false;
         }
-        // deseleziono tutte le spunte solo se clicco su escludi film
-        if (target === "noMovies" && this.moviesCheckboxes.noMovies === true) {
+        // deseleziono tutte le spunte solo se clicco su escludi film/serie
+        if ((target === "noMovies" || target === "noSeries") && selezione.noSelected === true) {
           // Setto false tutte le spunte
-          this.moviesGeneri.forEach((genere) => {
-            this.moviesCheckboxes[genere.name] = false;
+          listaGeneri.forEach((genere) => {
+            selezione[genere.name] = false;
           });
-          // Setto false "Tutti i film"
-          this.moviesCheckboxes.allMovies = false;
+          // Setto false "Tutti i film/serie"
+          selezione.allSelected = false;
         }
-
-
-      }
-
-      else if (moviesOrSeries === "series") {
-
-      }
     }
 
   }
