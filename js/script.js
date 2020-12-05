@@ -28,7 +28,11 @@ var app = new Vue({
     // valori menu a tendina
     moviesCheckboxes: {
       allMovies: true,
-      noMovies: false,
+      noMovies: false
+    },
+    seriesCheckboxes: {
+      allSeries: true,
+      noSeries: false
     }
   },
 
@@ -40,17 +44,23 @@ var app = new Vue({
       .then(risposta => {
         this.moviesGeneri = risposta.data.genres;
         // console.log("Generi film: ", this.moviesGeneri);
+
+        // Aggiungo i generi a moviesCheckboxes o seriesCheckboxes
+        this.moviesGeneri.forEach((genere, i) => {
+          this.$set(this.moviesCheckboxes, genere.name, true);
+        });
       });
       // Series
       axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${this.apiKey}&${this.language}`)
       .then(risposta => {
         this.seriesGeneri = risposta.data.genres;
         // console.log("Generi serie: ", this.seriesGeneri);
+
+        // Aggiungo i generi a moviesCheckboxes o seriesCheckboxes
+        this.seriesGeneri.forEach((genere, i) => {
+          this.$set(this.seriesCheckboxes, genere.name, true);
+        });
       });
-
-      // Comportamento predefinito filtri generi
-
-
   })},
 
   computed: {
@@ -220,9 +230,8 @@ var app = new Vue({
     },
 
     filtroMovies: function(genereSelezionato, boolean){
-      console.log(genereSelezionato, boolean);
-    }
 
+    }
 
   }
 })
