@@ -135,6 +135,10 @@ footer {
   margin-right: 4px;
 }
 
+.tendina li:hover {
+  cursor: pointer;
+}
+
 .li-special {
   font-weight: bold;
   margin: 3px 0;
@@ -147,7 +151,6 @@ footer {
 .tendina .li-generi:nth-child(even) {
   background-color:  #333333;
 }
-
 
 /* main */
 main {

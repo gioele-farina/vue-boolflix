@@ -39,6 +39,7 @@ var app = new Vue({
   mounted: function () {
   this.$nextTick(function () {
       // Recupero elenco dei generi
+
       // Movies
       axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${this.apiKey}&${this.language}`)
       .then(risposta => {
@@ -50,8 +51,9 @@ var app = new Vue({
           this.$set(this.moviesCheckboxes, genere.name, true);
         });
       });
+
       // Series
-      axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${this.apiKey}&${this.language}`)
+      axios.get(`https://api.themoviedb.org/3/genre/tv/list?api_key=${this.apiKey}&${this.language}`)
       .then(risposta => {
         this.seriesGeneri = risposta.data.genres;
         // console.log("Generi serie: ", this.seriesGeneri);
@@ -66,7 +68,62 @@ var app = new Vue({
   computed: {
     // Gestione output
     outputRicerca: function () {
-      return [...this.movies,...this.series];
+      // Risultati non filtrati
+      // return [...this.movies,...this.series];
+
+      let moviesFiltred =
+      this.movies.filter((movie) => {
+        // se è selezionata la spunta escludi film
+        if (this.moviesCheckboxes.noSelected) {
+          return false;
+        } else {
+          // ottiene la lista generi numerica dei generi selezionati
+          let lista = this.moviesGeneri.map((genere) =>{
+            // se il genere ha la spunta su true lo mette nella lista
+            if (this.moviesCheckboxes[genere.name]) {
+              return genere.id;
+            }
+          });
+          console.log(lista);
+          // ritorna l'item solo se almeno uno dei suoi generi è nella lista
+          let corrispondenza = false;
+          movie.genre_ids.forEach((genere, i) => {
+            if (lista.includes(genere)) {
+              corrispondenza = true;
+            }
+          });
+          return corrispondenza === true;
+        }
+
+      });
+
+      let seriesFiltred =
+      this.series.filter((serie) => {
+        // se è selezionata la spunta escludi serie Tv
+        if (this.seriesCheckboxes.noSelected) {
+          return false;
+        } else {
+          // ottiene la lista generi numerica dei generi selezionati
+          let lista = this.seriesGeneri.map((genere) =>{
+            // se il genere ha la spunta su true lo mette nella lista
+            if (this.seriesCheckboxes[genere.name]) {
+              return genere.id;
+            }
+          });
+          console.log(lista);
+          // ritorna l'item solo se almeno uno dei suoi generi è nella lista
+          let corrispondenza = false;
+          serie.genre_ids.forEach((genere, i) => {
+            if (lista.includes(genere)) {
+              corrispondenza = true;
+            }
+          });
+          return corrispondenza === true;
+        }
+      });
+
+      return [...moviesFiltred,...seriesFiltred];
+
     }
   },
 
@@ -227,6 +284,11 @@ var app = new Vue({
           this.esploraMovies = false;
         }
       }
+    },
+
+    chiudiMenu: function(){
+      this.esploraSeries = false;
+      this.esploraMovies = false;
     },
 
     filtroGeneri: function(moviesOrSeries, target){

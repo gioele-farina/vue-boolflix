@@ -25,7 +25,7 @@
     <div id="app">
 
       <!-- Navbar -->
-      <nav>
+      <nav @click="chiudiMenu">
         <img class="logo" src="img/logo.png" alt="">
         <div class="search">
           <input v-model="ricerca" placeholder="Write something" v-on:keydown.13="avviaRicerca()">
@@ -52,7 +52,7 @@
 
             <li class="li-special">Generi:</li>
 
-            <li class="li-generi" v-for="genere in moviesGeneri">
+            <li class="li-generi" v-for="genere in moviesGeneri" @click="moviesCheckboxes[genere.name] = !(moviesCheckboxes[genere.name])">
               <input type="checkbox" v-model="moviesCheckboxes[genere.name]" @change="filtroGeneri('movies')">
               {{ genere.name }}
             </li>
@@ -75,7 +75,7 @@
 
             <li class="li-special">Generi:</li>
 
-            <li class="li-generi" v-for="genere in seriesGeneri">
+            <li class="li-generi" v-for="genere in seriesGeneri" @click="seriesCheckboxes[genere.name] = !(seriesCheckboxes[genere.name])">
               <input type="checkbox" v-model="seriesCheckboxes[genere.name]" @change="filtroGeneri('series')">
               {{ genere.name }}
             </li>
@@ -85,7 +85,7 @@
       </div>
 
       <!-- output -->
-      <main>
+      <main @click="chiudiMenu">
         <!-- Questa è una singola scheda film/serie -->
         <div class="movie" v-for="(movie, i) in outputRicerca" @mouseenter="showMoreInfo(movie)">
 
@@ -123,7 +123,7 @@
       </main>
 
       <!-- footer -->
-      <footer>
+      <footer @click="chiudiMenu">
         <div class="navigazione" v-if="pagineTotali !== 0">
           <i class="far fa-caret-square-left" @click="prePage()"></i>
           <span>Page {{paginaAttuale}} of {{pagineTotali}}</span>
