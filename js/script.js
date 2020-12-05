@@ -25,6 +25,11 @@ var app = new Vue({
     // menu a tendina
     esploraMovies: false,
     esploraSeries: false,
+    // valori menu a tendina
+    moviesCheckboxes: {
+      allMovies: true,
+      noMovies: false,
+    }
   },
 
   mounted: function () {
@@ -43,6 +48,9 @@ var app = new Vue({
         // console.log("Generi serie: ", this.seriesGeneri);
       });
 
+      // Comportamento predefinito filtri generi
+
+
   })},
 
   computed: {
@@ -59,6 +67,8 @@ var app = new Vue({
         // reset di questi campi
         this.pagineTotali = 0;
         this.paginaAttuale = 0;
+        this.esploraMovies = false;
+        this.esploraSeries = false;
 
         // l'api vuole "+" anzichè gli spazi, quindi li converto
         this.query = this.ricerca.replace(/ /g, "+");
@@ -207,7 +217,13 @@ var app = new Vue({
           this.esploraMovies = false;
         }
       }
+    },
+
+    filtroMovies: function(genereSelezionato, boolean){
+      console.log(genereSelezionato, boolean);
     }
+
+
   }
 })
 

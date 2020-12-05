@@ -39,16 +39,16 @@
           <button type="button" name="buttonEsploraMovies" @click="menuGeneri(event.target.name)">Esplora film</button>
           <ul v-if="esploraMovies" class="tendina">
             <li>
-              <input type="checkbox">
+              <input type="checkbox" name="allMovies" v-model="moviesCheckboxes.allMovies" @change="filtroMovies(event.target.name ,event.target.checked)">
                 Mostra tutti film
               </li>
             <li>
-              <input type="checkbox">
+              <input type="checkbox" name="noMovies" v-model="moviesCheckboxes.noMovies" @change="filtroMovies(event.target.name ,event.target.checked)">
                 Escludi film
               </li>
             <li class="li-special">Generi:</li>
             <li class="li-generi" v-for="genere in moviesGeneri">
-              <input type="checkbox">
+              <input type="checkbox" v-model="moviesCheckboxes.allMovies ? true : false" @change="filtroMovies(genere.name, event.target.checked)">
               {{ genere.name }}
             </li>
           </ul>
