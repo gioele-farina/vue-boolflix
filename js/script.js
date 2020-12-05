@@ -27,11 +27,11 @@ var app = new Vue({
     esploraSeries: false,
     // valori menu a tendina
     moviesCheckboxes: {
-      allMovies: true,
+      allMovies: false,
       noMovies: false
     },
     seriesCheckboxes: {
-      allSeries: true,
+      allSeries: false,
       noSeries: false
     }
   },
@@ -229,8 +229,34 @@ var app = new Vue({
       }
     },
 
-    filtroMovies: function(genereSelezionato, boolean){
+    filtroGeneri: function(moviesOrSeries, target){
 
+      if (moviesOrSeries === "movies") {
+        // seleziona tutte le spunte solo se clicco sulla casella mostra tutti i film
+        if (target === "allMovies" && this.moviesCheckboxes.allMovies === true) {
+          // Setto true tutte le spunte
+          this.moviesGeneri.forEach((genere) => {
+            this.moviesCheckboxes[genere.name] = true;
+          });
+          // Setto false "Escludi film"
+          this.moviesCheckboxes.noMovies = false;
+        }
+        // deseleziono tutte le spunte solo se clicco su escludi film
+        if (target === "noMovies" && this.moviesCheckboxes.noMovies === true) {
+          // Setto false tutte le spunte
+          this.moviesGeneri.forEach((genere) => {
+            this.moviesCheckboxes[genere.name] = false;
+          });
+          // Setto false "Tutti i film"
+          this.moviesCheckboxes.allMovies = false;
+        }
+
+
+      }
+
+      else if (moviesOrSeries === "series") {
+
+      }
     }
 
   }

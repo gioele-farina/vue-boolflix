@@ -41,19 +41,19 @@
 
           <ul v-if="esploraMovies" class="tendina">
             <li>
-              <input type="checkbox" name="allMovies" v-model="moviesCheckboxes.allMovies" @change="filtroMovies()">
+              <input type="checkbox" name="allMovies" v-model="moviesCheckboxes.allMovies" @change="filtroGeneri('movies', event.target.name)">
                 Mostra tutti film
             </li>
 
             <li>
-              <input type="checkbox" name="noMovies" v-model="moviesCheckboxes.noMovies" @change="filtroMovies()">
+              <input type="checkbox" name="noMovies" v-model="moviesCheckboxes.noMovies" @change="filtroGeneri('movies', event.target.name)">
                 Escludi film
             </li>
 
             <li class="li-special">Generi:</li>
 
             <li class="li-generi" v-for="genere in moviesGeneri">
-              <input type="checkbox" v-model="moviesCheckboxes[genere.name]" @change="filtroMovies()">
+              <input type="checkbox" v-model="moviesCheckboxes[genere.name]" @change="filtroGeneri('movies')">
               {{ genere.name }}
             </li>
           </ul>
@@ -64,19 +64,19 @@
 
           <ul v-if="esploraSeries" class="tendina">
             <li>
-              <input type="checkbox" name="allSeries" v-model="seriesCheckboxes.allSeries">
+              <input type="checkbox" name="allSeries" v-model="seriesCheckboxes.allSeries" @change="filtroGeneri('series')">
                 Mostra tutte le serie TV
             </li>
 
             <li>
-              <input type="checkbox" name="noSeries" v-model="seriesCheckboxes.noSeries">
+              <input type="checkbox" name="noSeries" v-model="seriesCheckboxes.noSeries" @change="filtroGeneri('series')">
                 Escludi serie TV
             </li>
 
             <li class="li-special">Generi:</li>
 
             <li class="li-generi" v-for="genere in seriesGeneri">
-              <input type="checkbox" v-model="seriesCheckboxes[genere.name]">
+              <input type="checkbox" v-model="seriesCheckboxes[genere.name]" @change="filtroGeneri('series')">
               {{ genere.name }}
             </li>
           </ul>
