@@ -30,17 +30,33 @@
         <div class="search">
           <input v-model="ricerca" placeholder="Write something" v-on:keydown.13="avviaRicerca()">
           <button type="button" name="button" @click="avviaRicerca()">Search</button>
-          <button class="ricercaAvanzataButton">Ricerca avanzata</button>
-        </div>
-        <div class="ricercaAvanzata">
-          <section class="search-movies">
-
-          </section>
-          <section class="search-series">
-
-          </section>
         </div>
       </nav>
+
+      <!-- Ricerca avanzata -->
+      <div class="ricercaAvanzata">
+        <section class="ricercaMovies">
+          <button type="button" name="button">Esplora film</button>
+          <ul class="tendina">
+            <li>
+              <input type="checkbox">
+                Mostra tutti film
+              </li>
+            <li>
+              <input type="checkbox">
+                Escludi film
+              </li>
+            <li class="li-special">Generi:</li>
+            <li v-for="genere in moviesGeneri">
+              <input type="checkbox">
+              {{ genere.name }}
+            </li>
+          </ul>
+        </section>
+        <section class="ricarcaSeries">
+          <button type="button" name="button">Esplora series</button>
+        </section>
+      </div>
 
       <!-- output -->
       <main>
