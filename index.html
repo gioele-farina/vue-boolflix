@@ -24,7 +24,7 @@
 
     <div id="app">
 
-      <!-- search -->
+      <!-- Navbar -->
       <nav>
         <img class="logo" src="img/logo.png" alt="">
         <div class="search">
@@ -38,16 +38,20 @@
 
         <section class="ricercaMovies">
           <button type="button" name="buttonEsploraMovies" @click="menuGeneri(event.target.name)">Esplora film</button>
+
           <ul v-if="esploraMovies" class="tendina">
             <li>
               <input type="checkbox" name="allMovies" v-model="moviesCheckboxes.allMovies" @change="filtroMovies()">
                 Mostra tutti film
-              </li>
+            </li>
+
             <li>
               <input type="checkbox" name="noMovies" v-model="moviesCheckboxes.noMovies" @change="filtroMovies()">
                 Escludi film
-              </li>
+            </li>
+
             <li class="li-special">Generi:</li>
+
             <li class="li-generi" v-for="genere in moviesGeneri">
               <input type="checkbox" v-model="moviesCheckboxes[genere.name]" @change="filtroMovies()">
               {{ genere.name }}
@@ -57,16 +61,20 @@
 
         <section class="ricercaSeries">
           <button type="button" name="buttonEsploraSeries" @click="menuGeneri(event.target.name)">Esplora series</button>
+
           <ul v-if="esploraSeries" class="tendina">
             <li>
               <input type="checkbox" name="allSeries" v-model="seriesCheckboxes.allSeries">
                 Mostra tutte le serie TV
-              </li>
+            </li>
+
             <li>
               <input type="checkbox" name="noSeries" v-model="seriesCheckboxes.noSeries">
                 Escludi serie TV
-              </li>
+            </li>
+
             <li class="li-special">Generi:</li>
+
             <li class="li-generi" v-for="genere in seriesGeneri">
               <input type="checkbox" v-model="seriesCheckboxes[genere.name]">
               {{ genere.name }}
@@ -84,6 +92,7 @@
           <img class="poster" :src="'https://image.tmdb.org/t/p/w342/' + movie.poster_path"  onerror="this.src='img/no-poster-available.jpg'" alt="No poster data">
 
           <div class="movie-info">
+
             <!-- Sommario -->
             <div class="summary">
               <h2>Titolo: <span>{{ movie.title || movie.name }}<span></h2>
@@ -103,6 +112,7 @@
               <h2 v-if="cast.length !== 0">Cast: <span class="elenco" v-for="attore in cast.slice(0,4)">{{ attore }}</span></h2>
               <h2 v-else>Cast: <span>no information</span></h2>
             </div>
+
             <!-- Overview -->
             <div class="overview">
               <h2 v-if="movie.overview !== ''">Overview: <span>{{ movie.overview }}</span></h2>
