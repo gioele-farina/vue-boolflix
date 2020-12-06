@@ -37,7 +37,7 @@
       <div class="ricercaAvanzata">
 
         <section class="ricercaMovies">
-          <button type="button" name="buttonEsploraMovies" @click="menuGeneri(event.target.name)">Esplora film</button>
+          <button type="button" name="buttonEsploraMovies" @click="menuGeneri(event.target.name)">Filtra risultati film</button>
 
           <ul v-if="esploraMovies" class="tendina">
             <li>
@@ -60,7 +60,7 @@
         </section>
 
         <section class="ricercaSeries">
-          <button type="button" name="buttonEsploraSeries" @click="menuGeneri(event.target.name)">Esplora series</button>
+          <button type="button" name="buttonEsploraSeries" @click="menuGeneri(event.target.name)">Filtra risultati serie</button>
 
           <ul v-if="esploraSeries" class="tendina">
             <li>

@@ -84,7 +84,6 @@ var app = new Vue({
               return genere.id;
             }
           });
-          console.log(lista);
           // ritorna l'item solo se almeno uno dei suoi generi è nella lista
           let corrispondenza = false;
           movie.genre_ids.forEach((genere, i) => {
@@ -92,7 +91,7 @@ var app = new Vue({
               corrispondenza = true;
             }
           });
-          return corrispondenza === true;
+          return corrispondenza === true || movie.genre_ids.length === 0;
         }
 
       });
@@ -110,7 +109,6 @@ var app = new Vue({
               return genere.id;
             }
           });
-          console.log(lista);
           // ritorna l'item solo se almeno uno dei suoi generi è nella lista
           let corrispondenza = false;
           serie.genre_ids.forEach((genere, i) => {
@@ -118,7 +116,7 @@ var app = new Vue({
               corrispondenza = true;
             }
           });
-          return corrispondenza === true;
+          return corrispondenza === true || serie.genre_ids.length === 0;
         }
       });
 

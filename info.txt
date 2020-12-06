@@ -1,8 +1,0 @@
-mia key:
-cd471903e138fa6aad2b7a7c8910d06f
-
-c'è un indirizzo per le informazioni generiche su un film
-un altro indirizzo con l'id del film per i dettagli
-
-esempio ricarca film in italiano
-https://api.themoviedb.org/3/search/movie?api_key=cd471903e138fa6aad2b7a7c8910d06f&language=it-IT&query=casa
