@@ -67,7 +67,8 @@ footer {
   padding: 5px;
 }
 
-.search button {
+.search button,
+.bottoni_ricerca_responsive button {
   background-color: black;
   border: 1px solid white;
   border-radius: 5px;
@@ -75,7 +76,8 @@ footer {
   padding: 5px 8px;
 }
 
-.search button:hover {
+.search button:hover,
+.bottoni_ricerca_responsive button:hover {
   cursor: pointer;
   color: red;
   border-color: red;
@@ -283,4 +285,95 @@ ul li {
   font-size: 1rem;
   font-weight: 500;
   font-style: oblique;
+}
+
+/* layout responsive */
+.ham-menu,
+.search-responsive,
+.ricercaAvanzataResponsive {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  nav .search {
+    display: none;
+  }
+
+  .ham-menu {
+    display: block;
+    color: white;
+    font-size: 1.3rem;
+  }
+
+  .ham-menu:hover {
+    cursor: pointer;
+  }
+
+  .bottoni_ricerca {
+    display: none;
+  }
+
+  .search-responsive {
+    display: block;
+  }
+
+  .chiave_ricerca {
+    display: none;
+  }
+
+  .ricercaAvanzataResponsive {
+    color: white;
+    display: block;
+    width: 100%;
+    height: calc(100vh - 75px);
+    overflow-y: auto;
+    position: fixed;
+    z-index: 3000;
+    top: 75px;
+    left: 0;
+    background-color: rgba(255, 0, 0, 0.5);
+  }
+
+  .ricercaMovies,
+  .ricercaSeries {
+    position: static;
+  }
+
+  .bottoni_ricerca_responsive {
+    display: flex;
+    justify-content: space-between;
+    position: static;
+  }
+
+  .bottoni_ricerca_responsive button {
+    margin: 0 10px;
+    margin-top: 5px;
+    position: static;
+  }
+
+  .tendina {
+    margin: auto;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    z-index: 4000;
+    list-style: none;
+    text-align: left;
+    min-height: 80%;
+    max-height: 80%;
+    max-width: 95%;
+    overflow-y: auto;
+    background-color: #262626;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid black;
+  }
+
+  .red {
+    color: red;
+  }
+
+  .movie:hover {
+    transform: scale(1);
+  }
 }

@@ -34,7 +34,9 @@ var app = new Vue({
     seriesCheckboxes: {
       allSelected: false,
       noSelected: false
-    }
+    },
+    // hamburgher menu
+    hamMenu: false
   },
 
   mounted: function () {
@@ -165,6 +167,7 @@ var app = new Vue({
         this.paginaAttuale = 0;
         this.esploraMovies = false;
         this.esploraSeries = false;
+        this.hamMenu = false;
 
         // Credo una copia della query da mostrare a video
         this.ricercaNonFormattata = "Ricerca per: " + this.ricerca;
@@ -356,6 +359,14 @@ var app = new Vue({
           // Setto false "Tutti i film/serie"
           selezione.allSelected = false;
         }
+    },
+
+    displayHamMenu: function (){
+      this.hamMenu = !(this.hamMenu);
+    },
+
+    closeHamMenu: function (){
+      this.hamMenu = false;
     }
 
   }

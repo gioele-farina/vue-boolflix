@@ -25,16 +25,21 @@
     <div id="app">
 
       <!-- Navbar -->
-      <nav @click="chiudiMenu">
+      <nav @click="chiudiMenu" @click="closeHamMenu">
         <img class="logo" src="img/logo.png" alt="">
         <div class="search">
           <input v-model="ricerca" placeholder="Write something" v-on:keydown.13="avviaRicerca()">
           <button type="button" name="button" @click="avviaRicerca()">Search</button>
         </div>
+
+        <!-- responsive -->
+        <div :class="['ham-menu' ,{'red': hamMenu === true}]" @click="displayHamMenu">
+          <i class="fas fa-bars"></i>
+        </div>
       </nav>
 
       <!-- Ricerca avanzata -->
-      <div class="ricercaAvanzata">
+      <div class="ricercaAvanzata" @click="closeHamMenu">
 
         <h2 class="chiave_ricerca">{{ ricercaNonFormattata || ''}}</h2>
 
@@ -84,8 +89,65 @@
               </li>
             </ul>
           </section>
+
         </div>
 
+        <!-- responsive -->
+        <div class="search-responsive">
+          <input v-model="ricerca" placeholder="Write something" v-on:keydown.13="avviaRicerca()">
+        </div>
+
+      </div>
+
+      <!-- Ricerca avantaza responsive -->
+      <div v-if="hamMenu" class="ricercaAvanzataResponsive">
+        <div class="bottoni_ricerca_responsive">
+          <section class="ricercaMovies">
+            <button type="button" name="buttonEsploraMovies" @click="menuGeneri(event.target.name)">Filtra risultati film</button>
+
+            <ul v-if="esploraMovies" class="tendina">
+              <li>
+                <input type="checkbox" name="allMovies" v-model="moviesCheckboxes.allSelected" @change="filtroGeneri('movies', event.target.name)">
+                  Mostra tutti film
+              </li>
+
+              <li>
+                <input type="checkbox" name="noMovies" v-model="moviesCheckboxes.noSelected" @change="filtroGeneri('movies', event.target.name)">
+                  Escludi film
+              </li>
+
+              <li class="li-special">Generi:</li>
+
+              <li class="li-generi" v-for="genere in moviesGeneri" @click="moviesCheckboxes[genere.name] = !(moviesCheckboxes[genere.name])">
+                <input type="checkbox" v-model="moviesCheckboxes[genere.name]" @change="filtroGeneri('movies')">
+                {{ genere.name }}
+              </li>
+            </ul>
+          </section>
+
+          <section class="ricercaSeries">
+            <button type="button" name="buttonEsploraSeries" @click="menuGeneri(event.target.name)">Filtra risultati serie</button>
+
+            <ul v-if="esploraSeries" class="tendina">
+              <li>
+                <input type="checkbox" name="allSeries" v-model="seriesCheckboxes.allSelected" @change="filtroGeneri('series', event.target.name)">
+                  Mostra tutte le serie TV
+              </li>
+
+              <li>
+                <input type="checkbox" name="noSeries" v-model="seriesCheckboxes.noSelected" @change="filtroGeneri('series', event.target.name)">
+                  Escludi serie TV
+              </li>
+
+              <li class="li-special">Generi:</li>
+
+              <li class="li-generi" v-for="genere in seriesGeneri" @click="seriesCheckboxes[genere.name] = !(seriesCheckboxes[genere.name])">
+                <input type="checkbox" v-model="seriesCheckboxes[genere.name]" @change="filtroGeneri('series')">
+                {{ genere.name }}
+              </li>
+            </ul>
+          </section>
+        </div>
       </div>
 
       <!-- output -->
@@ -128,11 +190,10 @@
             </div>
           </div>
 
-        </div>
       </main>
 
       <!-- footer -->
-      <footer @click="chiudiMenu">
+      <footer @click="chiudiMenu" @click="closeHamMenu">
         <div class="navigazione" v-if="pagineTotali !== 0">
           <i class="far fa-caret-square-left" @click="prePage()"></i>
           <span>Page {{paginaAttuale}} of {{pagineTotali}}</span>
