@@ -64,11 +64,41 @@ var app = new Vue({
           this.$set(this.seriesCheckboxes, genere.name, true);
         });
       });
+
+      // All'avvio mostra film e serie popolari
+      const ricercaMoviesPopolari = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&include_adult=false&include_video=false&page=1';
+      axios.get(ricercaMoviesPopolari, {
+      params: {
+        api_key: this.apiKey,
+        language: this.language,
+      }})
+      .then(risposta => {
+        risposta.data.results.forEach((movie, i) => {
+          this.$set(movie, "categoria", "movie");
+        });
+        this.movies = risposta.data.results;
+      });
+
+      const ricercaSeriesPopolari = 'https://api.themoviedb.org/3/discover/tv?sort_by=popularity.desc&include_adult=false&include_video=false&page=1';
+      axios.get(ricercaSeriesPopolari, {
+      params: {
+        api_key: this.apiKey,
+        language: this.language,
+      }})
+      .then(risposta => {
+        risposta.data.results.forEach((movie, i) => {
+          this.$set(movie, "categoria", "serie");
+        });
+        this.series = risposta.data.results;
+      });
+
+
   })},
 
   computed: {
     // Gestione output
     outputRicerca: function () {
+
       // Risultati non filtrati
       // return [...this.movies,...this.series];
 
@@ -241,6 +271,10 @@ var app = new Vue({
     },
 
     showMoreInfo: function(movieDATA){
+      // reset
+      this.generi = [];
+      this.cast = [];
+
       // console.log("ID:", movieDATA.id);
       // console.log("Tipo", movieDATA.categoria);
       queryDettagliFilm = `${this.apiDettagliFilm}${movieDATA.id}?api_key=${this.apiKey}&${this.language}&append_to_response=credits`;

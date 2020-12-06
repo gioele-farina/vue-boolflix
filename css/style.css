@@ -222,9 +222,13 @@ main:after {
 .overview {
   width: 100%;
   height: 45%;
-  background-color: black;
   overflow: auto;
   border-radius: 5px;
+}
+
+.overview span,
+.overview h2 {
+  background-color: black;
 }
 
 .movie:hover .movie-info  {
