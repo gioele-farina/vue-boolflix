@@ -36,51 +36,55 @@
       <!-- Ricerca avanzata -->
       <div class="ricercaAvanzata">
 
-        <section class="ricercaMovies">
-          <button type="button" name="buttonEsploraMovies" @click="menuGeneri(event.target.name)">Filtra risultati film</button>
+        <h2 class="chiave_ricerca">{{ ricercaNonFormattata }}</h2>
 
-          <ul v-if="esploraMovies" class="tendina">
-            <li>
-              <input type="checkbox" name="allMovies" v-model="moviesCheckboxes.allSelected" @change="filtroGeneri('movies', event.target.name)">
-                Mostra tutti film
-            </li>
+        <div class="bottoni_ricerca">
+          <section class="ricercaMovies">
+            <button type="button" name="buttonEsploraMovies" @click="menuGeneri(event.target.name)">Filtra risultati film</button>
 
-            <li>
-              <input type="checkbox" name="noMovies" v-model="moviesCheckboxes.noSelected" @change="filtroGeneri('movies', event.target.name)">
-                Escludi film
-            </li>
+            <ul v-if="esploraMovies" class="tendina">
+              <li>
+                <input type="checkbox" name="allMovies" v-model="moviesCheckboxes.allSelected" @change="filtroGeneri('movies', event.target.name)">
+                  Mostra tutti film
+              </li>
 
-            <li class="li-special">Generi:</li>
+              <li>
+                <input type="checkbox" name="noMovies" v-model="moviesCheckboxes.noSelected" @change="filtroGeneri('movies', event.target.name)">
+                  Escludi film
+              </li>
 
-            <li class="li-generi" v-for="genere in moviesGeneri" @click="moviesCheckboxes[genere.name] = !(moviesCheckboxes[genere.name])">
-              <input type="checkbox" v-model="moviesCheckboxes[genere.name]" @change="filtroGeneri('movies')">
-              {{ genere.name }}
-            </li>
-          </ul>
-        </section>
+              <li class="li-special">Generi:</li>
 
-        <section class="ricercaSeries">
-          <button type="button" name="buttonEsploraSeries" @click="menuGeneri(event.target.name)">Filtra risultati serie</button>
+              <li class="li-generi" v-for="genere in moviesGeneri" @click="moviesCheckboxes[genere.name] = !(moviesCheckboxes[genere.name])">
+                <input type="checkbox" v-model="moviesCheckboxes[genere.name]" @change="filtroGeneri('movies')">
+                {{ genere.name }}
+              </li>
+            </ul>
+          </section>
 
-          <ul v-if="esploraSeries" class="tendina">
-            <li>
-              <input type="checkbox" name="allSeries" v-model="seriesCheckboxes.allSelected" @change="filtroGeneri('series', event.target.name)">
-                Mostra tutte le serie TV
-            </li>
+          <section class="ricercaSeries">
+            <button type="button" name="buttonEsploraSeries" @click="menuGeneri(event.target.name)">Filtra risultati serie</button>
 
-            <li>
-              <input type="checkbox" name="noSeries" v-model="seriesCheckboxes.noSelected" @change="filtroGeneri('series', event.target.name)">
-                Escludi serie TV
-            </li>
+            <ul v-if="esploraSeries" class="tendina">
+              <li>
+                <input type="checkbox" name="allSeries" v-model="seriesCheckboxes.allSelected" @change="filtroGeneri('series', event.target.name)">
+                  Mostra tutte le serie TV
+              </li>
 
-            <li class="li-special">Generi:</li>
+              <li>
+                <input type="checkbox" name="noSeries" v-model="seriesCheckboxes.noSelected" @change="filtroGeneri('series', event.target.name)">
+                  Escludi serie TV
+              </li>
 
-            <li class="li-generi" v-for="genere in seriesGeneri" @click="seriesCheckboxes[genere.name] = !(seriesCheckboxes[genere.name])">
-              <input type="checkbox" v-model="seriesCheckboxes[genere.name]" @change="filtroGeneri('series')">
-              {{ genere.name }}
-            </li>
-          </ul>
-        </section>
+              <li class="li-special">Generi:</li>
+
+              <li class="li-generi" v-for="genere in seriesGeneri" @click="seriesCheckboxes[genere.name] = !(seriesCheckboxes[genere.name])">
+                <input type="checkbox" v-model="seriesCheckboxes[genere.name]" @change="filtroGeneri('series')">
+                {{ genere.name }}
+              </li>
+            </ul>
+          </section>
+        </div>
 
       </div>
 
@@ -119,8 +123,8 @@
             </div>
 
             <!-- Overview -->
-            <div class="overview">
-              <h2 v-if="movie.overview !== ''">Overview: <span>{{ movie.overview }}</span></h2>
+            <div v-if="movie.overview !== ''" class="overview">
+              <h2>Overview: <span>{{ movie.overview }}</span></h2>
             </div>
           </div>
 

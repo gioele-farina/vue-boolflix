@@ -14,6 +14,7 @@ var app = new Vue({
     series: [],
     // ricerca
     ricerca: "",
+    ricercaNonFormattata: "",
     pagineTotali: 0,
     paginaAttuale: 0,
     //info aggiuntive on hover
@@ -134,6 +135,9 @@ var app = new Vue({
         this.paginaAttuale = 0;
         this.esploraMovies = false;
         this.esploraSeries = false;
+
+        // Credo una copia della query da mostrare a video
+        this.ricercaNonFormattata = "Ricerca per: " + this.ricerca;
 
         // l'api vuole "+" anzichè gli spazi, quindi li converto
         this.query = this.ricerca.replace(/ /g, "+");
