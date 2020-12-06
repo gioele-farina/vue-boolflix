@@ -168,6 +168,15 @@ main:after {
   width: 100%;
 }
 
+.no-results {
+  height: calc(100% - 15px);
+  width: 100%;
+  background-image: url(../img/noitemsfound.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50%;
+}
+
 .movie {
   background-color: black;
   display: flex;

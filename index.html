@@ -86,6 +86,11 @@
 
       <!-- output -->
       <main @click="chiudiMenu">
+
+        <!-- In caso di nessun risultato -->
+        <div v-if="outputRicerca.length === 0" class="no-results">
+        </div>
+
         <!-- Questa è una singola scheda film/serie -->
         <div class="movie" v-for="(movie, i) in outputRicerca" @mouseenter="showMoreInfo(movie)">
 
